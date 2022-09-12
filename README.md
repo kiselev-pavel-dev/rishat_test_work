@@ -57,6 +57,7 @@ python3 manage.py runserver
 
 URL:
 http://<ваш хост>/item/<id>/ - карточка товара id
+    
 http://<ваш хост>/order/<id>/ - покупки пользователя id
 
 
