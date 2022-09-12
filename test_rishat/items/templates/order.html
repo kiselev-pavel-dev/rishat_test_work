@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <title>Заказы</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+    {% for item in items %}
+    <h1>{{ item.name }}</h1>
+    <p>Описание: {{ item.description }}</p>
+    <p>Цена - {{ item.price }} {{ item.currency }}</p>
+    {% endfor %}
+    <button id="buy-button">Оплатить</button>
+    <script type="text/javascript">
+        var stripe = Stripe('{{ public_key }}');
+        var buyButton = document.getElementById('buy-button');
+        buyButton.addEventListener('click', () => {
+            fetch('/buy_order/', { method: 'GET' })
+                .then(result => { return result.json(); })
+                .then(session => stripe.redirectToCheckout({ sessionId: session.session_id }))
+        });
+    </script>
+</body>
+
+</html>

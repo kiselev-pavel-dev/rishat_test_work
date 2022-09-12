@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - static:/app/static/
+      - media_value:/app/media/
+    env_file:
+      - ./.env
+
+  nginx:
+    image: nginx:1.19.3
+    ports:
+      - "80:80"
+    volumes:
+      - .default.conf
+      - static:/usr/share/nginx/html/static/:ro
+      - media_value:/usr/share/nginx/html/media/:ro
+
+volumes:
+  static:
+  media_value:
